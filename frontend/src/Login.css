@@ -1,0 +1,79 @@
+.auth-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px; /* เพิ่มระยะห่างระหว่างฟิลด์ */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px; /* เพิ่มระยะห่างระหว่างป้ายชื่อกับกรอบข้อความ */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: flex; /* ใช้ flexbox เพื่อให้อยู่ในบรรทัดเดียวกัน */
+    align-items: center; /* จัดให้อยู่ตรงกลางในแนวตั้ง */
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 5px; /* เพิ่มช่องว่างระหว่าง checkbox กับข้อความ */
+}
+
+.show-password-container {
+    display: flex;
+    align-items: center; /* จัดแนวให้ตรงกลางแนวตั้ง */
+    margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+}
+
+.show-password-container input[type="checkbox"] {
+    margin-right: 5px; /* ลบระยะห่างด้านขวาของ checkbox */
+}
+
+.show-password-container label {
+    margin-right: 300px; /* ลบระยะห่างรอบๆ label */
+}
+
+

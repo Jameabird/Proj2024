@@ -1,0 +1,29 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+.nav-left a,
+.nav-right a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.nav-left a:hover,
+.nav-right a:hover {
+    text-decoration: underline;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right span {
+    margin: 0 10px;
+}

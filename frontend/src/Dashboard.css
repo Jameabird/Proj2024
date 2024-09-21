@@ -1,0 +1,30 @@
+.dashboard-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #e9ecef; /* เปลี่ยนสีพื้นหลังเล็กน้อยให้แตกต่างจาก Home */
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.dashboard-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745; /* ใช้สีเขียวแทนสีน้ำเงิน */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.dashboard-button:hover {
+    background-color: #218838; /* เปลี่ยนสีเมื่อ hover */
+}
