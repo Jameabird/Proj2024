@@ -23,8 +23,8 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:5000/login', { email, password });
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify({ username: response.data.username }));
-            setUser({ username: response.data.username }); // อัปเดต user context
+            localStorage.setItem('user', JSON.stringify({ username: response.data.username, email: response.data.email })); // เก็บ username และ email
+            setUser({ username: response.data.username, email: response.data.email }); // อัปเดต user context ให้มี username และ email
             alert('Login successful');
             navigate('/dashboard'); // เปลี่ยนไปหน้า Dashboard หลังจากล็อกอินสำเร็จ
         } catch (error) {

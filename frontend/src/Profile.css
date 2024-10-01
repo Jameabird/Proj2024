@@ -1,0 +1,36 @@
+.profile-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f5f5f5; /* สีพื้นหลังเหมือนกับ home-container */
+}
+
+h2 {
+    font-size: 2.5rem; /* ขนาดฟอนต์ของหัวเรื่อง */
+    color: #333; /* สีตัวอักษรของหัวเรื่อง */
+}
+
+p {
+    font-size: 1.2rem; /* ขนาดฟอนต์ของข้อความ */
+    color: #666; /* สีตัวอักษรของข้อความ */
+}
+
+.profile-image {
+    max-width: 200px; /* กำหนดความกว้างสูงสุดของภาพ */
+    border-radius: 10px; /* ปรับมุมให้กลม */
+    margin: 10px 0; /* ระยะห่างรอบภาพ */
+}
+
+.profile-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* สีพื้นหลังปุ่ม */
+    color: white; /* สีตัวอักษรของปุ่ม */
+    font-size: 1rem; /* ขนาดฟอนต์ของปุ่ม */
+    cursor: pointer;
+    text-decoration: none; /* ไม่ให้มีการขีดเส้นใต้ */
+}
+
+.profile-button:hover {
+    background-color: #0056b3; /* เปลี่ยนสีเมื่อเมาส์อยู่เหนือปุ่ม */
+}

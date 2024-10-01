@@ -22,8 +22,38 @@
 .nav-right {
     display: flex;
     align-items: center;
+    position: relative; /* เพิ่มเพื่อจัดการตำแหน่งของเมนูดรอปดาวน์ */
 }
 
 .nav-right span {
     margin: 0 10px;
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็น pointer */
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เมื่อชี้ไปที่ชื่อผู้ใช้ */
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* วางเมนูอยู่ใต้ชื่อผู้ใช้ */
+    right: 0;
+    background-color: #333; /* พื้นหลังเมนู */
+    color: white; /* สีข้อความ */
+    border: 1px solid #ddd; /* ขอบ */
+    padding: 10px;
+    z-index: 1; /* ให้เมนูอยู่เหนือองค์ประกอบอื่น */
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px; /* เพิ่มการ padding */
+}
+
+.dropdown-menu button:hover {
+    text-decoration: underline; /* เพิ่มเส้นใต้เมื่อเลื่อนเมาส์ไปที่ปุ่ม */
 }

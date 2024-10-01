@@ -24,13 +24,22 @@ button {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: #007bff; /* ปุ่มปกติ */
     color: white;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* สีเมื่อ hover */
+}
+
+.delete-button {
+    background-color: #dc3545; /* เปลี่ยนสีปุ่ม Delete เป็นสีแดง */
+    margin-left: 10px; /* เพิ่มระยะห่างจากปุ่ม Update */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* สีเมื่อ hover ของปุ่ม Delete */
 }
 
 .confirm-dialog {

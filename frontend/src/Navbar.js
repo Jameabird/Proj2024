@@ -1,36 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { UserContext } from './UserContext'; // นำเข้า UserContext
+import { UserContext } from './UserContext';
 import './Navbar.css';
 
 const Navbar = () => {
-    const { user, setUser } = useContext(UserContext); // ดึง user และ setUser จาก context
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
-    const location = useLocation(); // ดึง path ปัจจุบัน
+    const location = useLocation();
+    const [showDropdown, setShowDropdown] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setUser(null); // ลบสถานะ user ออกจาก context
+        setUser(null);
         navigate('/login');
+    };
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
     };
 
     return (
         <nav className="navbar">
             <div className="nav-left">
-                {/* ตรวจสอบ path ถ้าอยู่ที่ /dashboard ให้แสดง Dashboard ถ้าไม่ใช่ให้แสดง Home */}
                 {location.pathname === '/dashboard' ? (
                     <Link to="/dashboard">Dashboard</Link>
                 ) : (
                     <Link to="/">Home</Link>
                 )}
+                <Link to="/about">About</Link>
             </div>
             <div className="nav-right">
                 {user ? (
-                    <>
-                        <span>{user.username}</span> {/* แสดงชื่อผู้ใช้ที่ล็อกอิน */}
-                        <button onClick={handleLogout}>Logout</button> {/* ปุ่ม Logout */}
-                    </>
+                    <div className="user-menu" onClick={toggleDropdown}>
+                        <span>{user.username}</span>
+                        {showDropdown && (
+                            <div className="dropdown-menu">
+                                <Link to="/profile">
+                                    <button>Profile</button>
+                                </Link>
+                                <button onClick={handleLogout}>Logout</button>
+                            </div>
+                        )}
+                    </div>
                 ) : (
                     <>
                         <Link to="/login">Login</Link>

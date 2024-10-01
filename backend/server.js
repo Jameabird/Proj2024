@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: '',
     database: 'user_management'
 });
 
@@ -106,6 +106,13 @@ app.delete('/users/:id', (req, res) => {
     });
 });
 
+// Get sensor data
+app.get('/sensor_data', (req, res) => {
+    db.query('SELECT * FROM sensor_data', (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json(results);
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
