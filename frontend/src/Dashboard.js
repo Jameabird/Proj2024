@@ -5,6 +5,7 @@ import './Dashboard.css';
 const Dashboard = () => {
     const [latestSensorData, setLatestSensorData] = useState(null);
     const [sensorHistory, setSensorHistory] = useState([]);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         // Fetch sensor data from the backend
@@ -22,6 +23,13 @@ const Dashboard = () => {
         };
 
         fetchSensorData();
+
+        // Update time every second
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount
     }, []);
 
     return (
@@ -32,6 +40,9 @@ const Dashboard = () => {
             {latestSensorData ? (
                 <div className="sensor-data">
                     <h2>Latest Sensor Data:</h2>
+                    <p>
+                        Current Date and Time (Thailand): {currentTime.toLocaleDateString('th-TH')} {currentTime.toLocaleTimeString('th-TH')}
+                    </p> {/* แสดงวันที่และเวลาเรียลไทม์ */}
                     <p>Temperature: {latestSensorData.temperature} °C</p>
                     <p>Humidity: {latestSensorData.humidity} %</p>
                     <p>Dust Density: {latestSensorData.dustDensity} mg/m³</p>

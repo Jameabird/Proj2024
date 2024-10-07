@@ -11,6 +11,7 @@ const UserList = () => {
     const [showUpdate, setShowUpdate] = useState(false);
     const [updatedUser, setUpdatedUser] = useState({ id: null, username: '', email: '' });
     const [updatePassword, setUpdatePassword] = useState('');
+    const [showAuth, setShowAuth] = useState(true); // สถานะการแสดงหน้าต่างยืนยัน
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -26,8 +27,10 @@ const UserList = () => {
             }
         };
 
-        fetchUsers();
-    }, []);
+        if (!showAuth) {
+            fetchUsers();
+        }
+    }, [showAuth]);
 
     const handleDeleteClick = (userId) => {
         setUserIdToDelete(userId);
@@ -104,82 +107,110 @@ const UserList = () => {
         setUpdatePassword(''); // รีเซ็ตค่าของรหัสผ่าน
     };
 
+    const handleAuthSubmit = (e) => {
+        e.preventDefault();
+        // รีเซ็ตค่าของ error เมื่อกรอกรหัสผ่านใหม่
+        setError('');
+        if (password !== 'admin456') {
+            setError('Incorrect password');
+            return;
+        }
+        setShowAuth(false); // ปิดหน้าต่างยืนยันเมื่อกรอกรหัสผ่านถูกต้อง
+    };
+
     return (
         <div className="userlist-container">
             <h2>User List</h2>
             {error && <p className="error-message">{error}</p>}
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                            <td>
-                                <button onClick={() => handleUpdateClick(user)}>Update</button>
-                                <button className="delete-button" onClick={() => handleDeleteClick(user.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {showConfirm && (
+            
+            {/* แสดงหน้าต่างยืนยันรหัสผ่าน */}
+            {showAuth ? (
                 <div className="confirm-dialog">
-                    <h3>Confirm Deletion</h3>
-                    <p>Please enter the password to confirm deletion.</p>
+                    <h3>Authentication Required</h3>
+                    <p>Please enter the password to access the user list.</p>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button onClick={handleConfirmDelete}>Confirm</button>
-                    <button onClick={handleCancel}>Cancel</button>
+                    <button onClick={handleAuthSubmit}>Submit</button>
                 </div>
-            )}
+            ) : (
+                <>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user.id}>
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        <button onClick={() => handleUpdateClick(user)}>Update</button>
+                                        <button className="delete-button" onClick={() => handleDeleteClick(user.id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
-            {showUpdate && (
-                <div className="confirm-dialog">
-                    <h3>Update User</h3>
-                    <p>Please enter the password to confirm update.</p>
-                    <input
-                        type="password"
-                        value={updatePassword}
-                        onChange={(e) => setUpdatePassword(e.target.value)}
-                    />
-                    <form onSubmit={handleUpdateSubmit}>
-                        <label>
-                            Username:
+                    {showConfirm && (
+                        <div className="confirm-dialog">
+                            <h3>Confirm Deletion</h3>
+                            <p>Please enter the password to confirm deletion.</p>
                             <input
-                                type="text"
-                                name="username"
-                                value={updatedUser.username}
-                                onChange={handleUpdateChange}
-                                required
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            Email:
+                            <button onClick={handleConfirmDelete}>Confirm</button>
+                            <button onClick={handleCancel}>Cancel</button>
+                        </div>
+                    )}
+
+                    {showUpdate && (
+                        <div className="confirm-dialog">
+                            <h3>Update User</h3>
+                            <p>Please enter the password to confirm update.</p>
                             <input
-                                type="email"
-                                name="email"
-                                value={updatedUser.email}
-                                onChange={handleUpdateChange}
-                                required
+                                type="password"
+                                value={updatePassword}
+                                onChange={(e) => setUpdatePassword(e.target.value)}
                             />
-                        </label>
-                        <button type="submit">Update</button>
-                        <button onClick={handleCancelUpdate}>Cancel</button>
-                    </form>
-                </div>
+                            <form onSubmit={handleUpdateSubmit}>
+                                <label>
+                                    Username:
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={updatedUser.username}
+                                        onChange={handleUpdateChange}
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    Email:
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={updatedUser.email}
+                                        onChange={handleUpdateChange}
+                                        required
+                                    />
+                                </label>
+                                <button type="submit">Update</button>
+                                <button onClick={handleCancelUpdate}>Cancel</button>
+                            </form>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
