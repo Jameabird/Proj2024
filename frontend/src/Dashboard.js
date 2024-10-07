@@ -7,24 +7,24 @@ const Dashboard = () => {
     const [sensorHistory, setSensorHistory] = useState([]);
     const [currentTime, setCurrentTime] = useState(new Date());
 
+    // ฟังก์ชันสำหรับการดึงข้อมูลเซนเซอร์
+    const fetchSensorData = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/sensor_data');
+            const data = response.data;
+            const latestData = data[data.length - 1]; // Get the latest data
+            const last20Entries = data.slice(-20); // Get the last 20 entries
+            setLatestSensorData(latestData);
+            setSensorHistory(last20Entries);
+        } catch (error) {
+            console.error('Error fetching sensor data:', error);
+        }
+    };
+
     useEffect(() => {
-        // Fetch sensor data from the backend
-        const fetchSensorData = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/sensor_data');
-                const data = response.data;
-                const latestData = data[data.length - 1]; // Get the latest data
-                const last20Entries = data.slice(-20); // Get the last 20 entries
-                setLatestSensorData(latestData);
-                setSensorHistory(last20Entries);
-            } catch (error) {
-                console.error('Error fetching sensor data:', error);
-            }
-        };
+        fetchSensorData(); // เรียกใช้ครั้งแรก
 
-        fetchSensorData();
-
-        // Update time every second
+        // อัปเดตเวลาเรียลไทม์ทุกวินาที
         const interval = setInterval(() => {
             setCurrentTime(new Date());
         }, 1000);
@@ -51,6 +51,11 @@ const Dashboard = () => {
                 <p>Loading latest sensor data...</p>
             )}
 
+            {/* ปุ่ม Update ไว้ตรงกลาง */}
+            <div className="update-button-container">
+                <button onClick={fetchSensorData} className="update-button">Update Latest Data</button>
+            </div>
+
             <h2>Last 20 Sensor Data Entries:</h2>
             {sensorHistory.length > 0 ? (
                 <table className="sensor-history-table">
@@ -59,7 +64,7 @@ const Dashboard = () => {
                             <th>ID</th>
                             <th>Temperature (°C)</th>
                             <th>Humidity (%)</th>
-                            <th>Dust Density (mg/m³)</th>
+                            <th>Dust Density (ug/m³)</th>
                         </tr>
                     </thead>
                     <tbody>
