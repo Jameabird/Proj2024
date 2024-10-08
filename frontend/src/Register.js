@@ -66,8 +66,6 @@ const Register = () => {
                 </div>
                 <button type="submit">Register</button>
             </form>
-
-            {/* เพิ่มข้อความและลิงก์ไปที่หน้า Login */}
             <p className="login-link">
                 มี account อยู่แล้ว? <Link to="/login">เข้าสู่ระบบที่นี่</Link>
             </p>
