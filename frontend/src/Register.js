@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'; // นำเข้า Link
+import { Link, useNavigate } from 'react-router-dom';
 import './Register.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // นำเข้าไอคอนตา
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); // ใช้เพื่อแสดงข้อความผิดพลาด
+    const [showPassword, setShowPassword] = useState(false); // เพิ่ม state สำหรับแสดงรหัสผ่าน
+    const [error, setError] = useState('');
 
-    const navigate = useNavigate(); // ใช้ useNavigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,18 +22,23 @@ const Register = () => {
             return;
         }
 
+        // ตรวจสอบความปลอดภัยของรหัสผ่าน (ต้องมีตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวอักษรพิเศษ และมีความยาวอย่างน้อย 7 ตัว)
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{7,}$/;
+        if (!passwordRegex.test(password)) {
+            setError('Password must be at least 7 characters long, include both uppercase and lowercase letters, and contain at least one special character (!@#$%^&*)');
+            return;
+        }
+
         try {
             await axios.post('http://localhost:5000/register', { username, email, password });
             alert('User registered successfully');
-            // ล้างข้อมูลหลังจากสมัครสมาชิกสำเร็จ
             setUsername('');
             setEmail('');
             setPassword('');
             setError('');
-            // นำทางไปยังหน้า Login
             navigate('/login');
         } catch (error) {
-            setError('Error registering user'); // ตั้งค่าข้อความผิดพลาด
+            setError('Error registering user');
         }
     };
 
@@ -56,13 +63,16 @@ const Register = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group password-container"> {/* เพิ่ม class password-container */}
                     <label>Password:</label>
                     <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'} // แสดง/ซ่อนรหัสผ่าน
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />} {/* เปลี่ยนไอคอนตาม state */}
+                    </span>
                 </div>
                 <button type="submit">Register</button>
             </form>

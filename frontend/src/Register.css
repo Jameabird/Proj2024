@@ -18,12 +18,13 @@ form {
 }
 
 .form-group {
-    margin-bottom: 15px; /* เพิ่มระยะห่างระหว่างฟิลด์ */
+    margin-bottom: 15px;
+    position: relative; /* ทำให้ฟิลด์ input และไอคอนสามารถซ้อนทับกันได้ */
 }
 
 label {
     display: block;
-    margin-bottom: 5px; /* เพิ่มระยะห่างระหว่างป้ายชื่อกับกรอบข้อความ */
+    margin-bottom: 5px;
 }
 
 input {
@@ -31,6 +32,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -51,4 +53,27 @@ button:hover {
     color: red;
     text-align: center;
     margin-bottom: 10px;
+}
+
+/* เพิ่ม CSS สำหรับการแสดงไอคอนในฟิลด์รหัสผ่าน */
+.password-container {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 70%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 10px;
 }

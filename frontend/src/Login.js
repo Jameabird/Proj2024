@@ -1,15 +1,16 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './UserContext'; // นำเข้า UserContext
+import { UserContext } from './UserContext';
 import './Login.css'; 
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // นำเข้าไอคอนตา
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false); // เพิ่ม state สำหรับแสดงรหัสผ่าน
-    const { setUser } = useContext(UserContext); // ใช้ useContext เพื่อดึง setUser
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -23,10 +24,10 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:5000/login', { email, password });
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify({ username: response.data.username, email: response.data.email })); // เก็บ username และ email
-            setUser({ username: response.data.username, email: response.data.email }); // อัปเดต user context ให้มี username และ email
+            localStorage.setItem('user', JSON.stringify({ username: response.data.username, email: response.data.email }));
+            setUser({ username: response.data.username, email: response.data.email });
             alert('Login successful');
-            navigate('/dashboard'); // เปลี่ยนไปหน้า Dashboard หลังจากล็อกอินสำเร็จ
+            navigate('/dashboard');
         } catch (error) {
             setError('Error logging in');
         }
@@ -45,22 +46,16 @@ const Login = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group password-container"> {/* เพิ่ม class password-container */}
                     <label>Password:</label>
                     <input
                         type={showPassword ? 'text' : 'password'} // เปลี่ยนประเภทของ input ตาม state
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </div>
-                <div className="show-password-container">
-                    <input
-                        type="checkbox"
-                        id="show-password"
-                        checked={showPassword}
-                        onChange={() => setShowPassword(!showPassword)}
-                    />
-                    <label htmlFor="show-password">Show password</label>
+                    <span className="password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />} {/* แสดงไอคอนตาม state */}
+                    </span>
                 </div>
                 <button type="submit">Login</button>
             </form>

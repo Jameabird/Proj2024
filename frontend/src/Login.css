@@ -19,6 +19,7 @@ form {
 
 .form-group {
     margin-bottom: 15px; /* เพิ่มระยะห่างระหว่างฟิลด์ */
+    position: relative;  /* ทำให้ฟิลด์ input และไอคอนสามารถซ้อนทับกันได้ */
 }
 
 label {
@@ -31,6 +32,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -53,27 +55,21 @@ button:hover {
     margin-bottom: 10px;
 }
 
-.form-group label {
-    display: flex; /* ใช้ flexbox เพื่อให้อยู่ในบรรทัดเดียวกัน */
-    align-items: center; /* จัดให้อยู่ตรงกลางในแนวตั้ง */
+/* เพิ่ม CSS สำหรับการแสดงไอคอนในฟิลด์รหัสผ่าน */
+.password-container {
+    position: relative; /* ทำให้ไอคอนซ้อนกับฟิลด์รหัสผ่าน */
 }
 
-.form-group input[type="checkbox"] {
-    margin-right: 5px; /* เพิ่มช่องว่างระหว่าง checkbox กับข้อความ */
+.password-toggle-icon {
+    position: absolute;
+    top: 70%; /* ปรับค่า top ให้สูงขึ้นนิดหน่อย */
+    right: 10px; /* ไอคอนอยู่ด้านขวาของฟิลด์รหัสผ่าน */
+    transform: translateY(-50%); /* จัดไอคอนให้อยู่ตรงกลางในแนวตั้ง */
+    cursor: pointer;
 }
 
-.show-password-container {
-    display: flex;
-    align-items: center; /* จัดแนวให้ตรงกลางแนวตั้ง */
-    margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+.password-toggle-icon svg {
+    width: 20px;
+    height: 20px;
 }
-
-.show-password-container input[type="checkbox"] {
-    margin-right: 5px; /* ลบระยะห่างด้านขวาของ checkbox */
-}
-
-.show-password-container label {
-    margin-right: 300px; /* ลบระยะห่างรอบๆ label */
-}
-
 
