@@ -5,7 +5,7 @@
     padding: 20px;
     background-color: #f5f5f5; /* สีพื้นหลังเหมือนกับ home-container */
     border-radius: 8px; /* ปรับมุมให้กลม */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับคอนเทนต์ */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับคอนเทนต์... */
 }
 
 h2 {
