@@ -73,3 +73,14 @@ button:hover {
     height: 20px;
 }
 
+.forget-password {
+    color: #007bff;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.forget-password:hover {
+    text-decoration: underline;
+}

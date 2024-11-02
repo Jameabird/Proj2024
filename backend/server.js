@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const sendResetEmail = require('./emailService'); // นำเข้าฟังก์ชันส่งอีเมล
 
 const app = express();
 const port = 5000;
@@ -69,6 +70,46 @@ app.post('/login', (req, res) => {
         const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
         // ส่ง username กลับไปที่ Frontend พร้อมกับ token
         res.json({ token, username: user.username });
+    });
+});
+
+// Forget password endpoint
+app.post('/forget-password', async (req, res) => {
+    const { email } = req.body;
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiryTime = new Date(Date.now() + 5 * 60 * 1000); // 5 นาที
+
+    // ตรวจสอบว่าอีเมลมีอยู่ในฐานข้อมูลหรือไม่
+    db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+        if (err) return res.status(500).send('Server error');
+        if (results.length === 0) return res.status(404).send('Email not found');
+
+        // อัปเดตรหัสรีเซ็ตและวันหมดอายุ
+        db.query('UPDATE users SET reset_code = ?, reset_code_expires = ? WHERE email = ?', [resetCode, expiryTime, email], (err, results) => {
+            if (err) return res.status(500).send('Server error');
+
+            // ส่งอีเมล
+            sendResetEmail(email, resetCode);
+            res.send('Reset code sent to email');
+        });
+    });
+});
+
+
+// Reset password endpoint
+app.post('/reset-password', async (req, res) => {
+    const { email, resetCode, newPassword } = req.body;
+
+    db.query('SELECT * FROM users WHERE email = ? AND reset_code = ? AND reset_code_expires > NOW()', [email, resetCode], async (err, results) => {
+        if (err) return res.status(500).send('Server error');
+        if (results.length === 0) return res.status(400).send('Invalid or expired reset code');
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        db.query('UPDATE users SET password = ?, reset_code = NULL, reset_code_expires = NULL WHERE email = ?', [hashedPassword, email], (err, results) => {
+            if (err) return res.status(500).send('Server error');
+            res.send('Password has been reset successfully');
+        });
     });
 });
 

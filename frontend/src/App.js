@@ -8,6 +8,8 @@ import Dashboard from './Dashboard';
 import UserList from './UserList'; 
 import About from './About';
 import Profile from './Profile';
+import ForgetPassword from './ForgetPassword';
+import ResetPassword from './ResetPassword';
 import { UserProvider } from './UserContext';
 import './App.css';
 
@@ -25,6 +27,8 @@ const App = () => {
                         <Route path="/users" element={<UserList />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/forget-password" element={<ForgetPassword />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
                     </Routes>
                 </div>
             </Router>
