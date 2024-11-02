@@ -1,100 +1,106 @@
 .profile-container {
-    display: flex; /* ใช้ Flexbox สำหรับการจัดเรียง */
-    flex-direction: column; /* จัดเรียงในแนวตั้ง */
-    align-items: center; /* จัดกลางให้ตรงกลาง */
-    padding: 20px;
-    background-color: #f5f5f5; /* สีพื้นหลังเหมือนกับ home-container */
-    border-radius: 8px; /* ปรับมุมให้กลม */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับคอนเทนต์... */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px; /* เพิ่ม padding สำหรับความห่างที่มากขึ้น */
+    background-color: #f0f4f8; /* เปลี่ยนสีพื้นหลังให้ดูนุ่มนวล */
+    border-radius: 10px; /* ปรับมุมให้กลม */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* เงาที่ชัดเจนขึ้น */
+    max-width: 500px; /* จำกัดความกว้างของคอนเทนต์ */
+    margin: auto; /* จัดกลางบนหน้าจอ */
 }
 
 h2 {
-    font-size: 2.5rem; /* ขนาดฟอนต์ของหัวเรื่อง */
-    color: #333; /* สีตัวอักษรของหัวเรื่อง */
-    margin-bottom: 20px; /* ระยะห่างด้านล่างของหัวเรื่อง */
+    font-size: 2.5rem;
+    color: #222; /* สีตัวอักษรเข้มขึ้น */
+    margin-bottom: 20px;
 }
 
 p {
-    font-size: 1.2rem; /* ขนาดฟอนต์ของข้อความ */
-    color: #666; /* สีตัวอักษรของข้อความ */
-    margin: 10px 0; /* ระยะห่างรอบข้อความ */
+    font-size: 1.2rem;
+    color: #555; /* สีตัวอักษรของข้อความ */
+    margin: 10px 0;
 }
 
 .profile-image {
-    max-width: 200px; /* กำหนดความกว้างสูงสุดของภาพ */
+    max-width: 200px;
     border-radius: 10px; /* ปรับมุมให้กลม */
-    margin: 10px 0; /* ระยะห่างรอบภาพ */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้กับภาพ */
+    margin: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้กับภาพ */
 }
 
 .profile-button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #007bff; /* สีพื้นหลังปุ่ม */
-    color: white; /* สีตัวอักษรของปุ่ม */
-    font-size: 1rem; /* ขนาดฟอนต์ของปุ่ม */
+    color: white;
+    font-size: 1rem;
     cursor: pointer;
-    text-decoration: none; /* ไม่ให้มีการขีดเส้นใต้ */
-    transition: background-color 0.3s; /* เพิ่มการเปลี่ยนสีอย่างนุ่มนวล */
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s; /* เพิ่มการเปลี่ยนสีและขยายขนาด */
 }
 
 .profile-button:hover {
     background-color: #0056b3; /* เปลี่ยนสีเมื่อเมาส์อยู่เหนือปุ่ม */
+    transform: scale(1.05); /* ขยายขนาดเล็กน้อยเมื่อ hover */
 }
 
 /* เพิ่มรูปแบบสำหรับฟอร์มการอัปเดต */
 .confirm-dialog {
-    background-color: #ffffff; /* สีพื้นหลังของฟอร์ม */
-    border-radius: 8px; /* ปรับมุมให้กลม */
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับฟอร์ม */
-    margin-top: 20px; /* ระยะห่างด้านบน */
-    display: flex; /* ใช้ Flexbox เพื่อจัดเรียง */
-    flex-direction: column; /* จัดเรียงในแนวตั้ง */
-    align-items: center; /* จัดกลางให้ตรงกลาง */
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px; /* เพิ่ม padding สำหรับความห่างที่มากขึ้น */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* เพิ่มเงาที่ชัดเจนขึ้น */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .confirm-dialog h3 {
-    margin-bottom: 15px; /* ระยะห่างด้านล่างของหัวเรื่องฟอร์ม */
+    margin-bottom: 20px; /* ระยะห่างด้านล่างของหัวเรื่องฟอร์ม */
 }
 
 .confirm-dialog label {
-    display: block; /* ทำให้ label แสดงในบรรทัดใหม่ */
-    margin-bottom: 5px; /* ระยะห่างด้านล่างของ label */
+    display: block;
+    margin-bottom: 10px; /* ระยะห่างด้านล่างของ label */
 }
 
 .confirm-dialog input {
-    padding: 10px; /* ระยะห่างภายในของ input */
+    padding: 12px; /* ระยะห่างภายในของ input */
     border: 1px solid #ccc; /* เส้นขอบของ input */
-    border-radius: 4px; /* ปรับมุมให้กลม */
+    border-radius: 5px; /* ปรับมุมให้กลม */
     width: 100%; /* ทำให้ input เต็มความกว้าง */
     box-sizing: border-box; /* ทำให้รวมเส้นขอบและ padding ในความกว้าง */
+    margin-bottom: 15px; /* ระยะห่างด้านล่างของ input */
 }
 
 .confirm-dialog button {
-    margin-top: 10px; /* ระยะห่างด้านบนของปุ่มในฟอร์ม */
+    margin-top: 10px;
     width: 100%; /* ทำให้ปุ่มเต็มความกว้าง */
     max-width: 200px; /* จำกัดความกว้างสูงสุดของปุ่ม */
-    padding: 10px; /* ระยะห่างภายในของปุ่ม */
-    background-color: #007bff; /* สีพื้นหลังปุ่ม */
-    color: white; /* สีตัวอักษรของปุ่ม */
-    border: none; /* ไม่มีเส้นขอบ */
-    border-radius: 4px; /* ปรับมุมให้กลม */
-    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เมื่อเมาส์อยู่เหนือปุ่ม */
-    transition: background-color 0.3s; /* เพิ่มการเปลี่ยนสีอย่างนุ่มนวล */
+    padding: 12px; /* ระยะห่างภายในของปุ่ม */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px; /* ปรับมุมให้กลม */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* เพิ่มการเปลี่ยนสีและขยายขนาด */
 }
 
 .confirm-dialog button:hover {
     background-color: #0056b3; /* เปลี่ยนสีเมื่อเมาส์อยู่เหนือปุ่ม */
+    transform: scale(1.05); /* ขยายขนาดเล็กน้อยเมื่อ hover */
 }
+
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* สีพื้นหลังโปร่งใส */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,12 +108,12 @@ p {
 }
 
 .modal-content {
-    background-color: #ffffff; /* สีพื้นหลังของ Modal */
-    padding: 20px;
-    border-radius: 8px; /* ปรับมุมให้กลม */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+    background-color: #ffffff;
+    padding: 30px; /* เพิ่ม padding สำหรับความห่างที่มากขึ้น */
+    border-radius: 10px; /* ปรับมุมให้กลม */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* เพิ่มเงาที่ชัดเจนขึ้น */
     width: 100%;
-    max-width: 400px; /* จำกัดความกว้างสูงสุด */
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,32 +121,33 @@ p {
 }
 
 .modal-content h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    font-size: 2rem; /* ขนาดฟอนต์ของหัวเรื่องใน Modal */
+    margin-bottom: 20px;
     color: #333;
 }
 
 .modal-content input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px; /* ระยะห่างภายในของ input */
+    margin-bottom: 15px; /* ระยะห่างด้านล่างของ input */
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
 .modal-content button {
     width: 100%;
-    max-width: 200px; /* จำกัดความกว้างสูงสุดของปุ่ม */
-    padding: 10px;
+    max-width: 200px;
+    padding: 12px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px; /* ปรับมุมให้กลม */
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s; /* เพิ่มการเปลี่ยนสีและขยายขนาด */
 }
 
 .modal-content button:hover {
     background-color: #0056b3; /* เปลี่ยนสีเมื่อเมาส์อยู่เหนือปุ่ม */
+    transform: scale(1.05); /* ขยายขนาดเล็กน้อยเมื่อ hover */
 }

@@ -4,7 +4,7 @@ import './Profile.css';
 import { UserContext } from './UserContext';
 
 const Profile = () => {
-    const { user: contextUser, setUser } = useContext(UserContext); // ใช้ Context
+    const { setUser } = useContext(UserContext); // ใช้ Context
     const [user, setUserProfile] = useState({ username: '', email: '' });
     const [showUpdate, setShowUpdate] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(true); 
@@ -53,14 +53,19 @@ const Profile = () => {
         e.preventDefault();
 
         try {
-            await axios.put(`http://localhost:5000/users/${user.id}`, updatedUser, {
+            const updateData = {};
+            if (updatedUser.username) updateData.username = updatedUser.username; // ถ้ามีการเปลี่ยน username
+            if (updatedUser.email) updateData.email = updatedUser.email; // ถ้ามีการเปลี่ยน email
+
+            await axios.put(`http://localhost:5000/users/${user.id}`, updateData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
 
-            setUserProfile({ ...user, ...updatedUser });
-            setUser({ ...contextUser, username: updatedUser.username }); // อัปเดต Context ด้วย username ใหม่
+            // อัปเดต user profile และ context
+            setUserProfile(prev => ({ ...prev, ...updateData }));
+            setUser(prev => ({ ...prev, username: updatedUser.username || prev.username })); // อัปเดต Context ด้วย username ใหม่
             setShowUpdate(false);
             setError('');
         } catch (error) {
@@ -71,7 +76,7 @@ const Profile = () => {
 
     const handleCancelUpdate = () => {
         setShowUpdate(false);
-        setUpdatedUser({ username: user.username, email: user.email });
+        setUpdatedUser({ username: '', email: '' }); // รีเซ็ตค่า
     };
 
     const handleInputChange = (e) => {
@@ -86,7 +91,7 @@ const Profile = () => {
             {showEmailModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h3>Enter Your Email</h3>
+                        <h3>Confirm with Your Email</h3>
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -117,7 +122,6 @@ const Profile = () => {
                                 name="username"
                                 value={updatedUser.username}
                                 onChange={handleUpdateChange}
-                                required
                             />
                         </label>
                         <label>
@@ -127,7 +131,6 @@ const Profile = () => {
                                 name="email"
                                 value={updatedUser.email}
                                 onChange={handleUpdateChange}
-                                required
                             />
                         </label>
                         <button type="submit">Update</button>
