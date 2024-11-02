@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './Profile.css';
+import { UserContext } from './UserContext';
 
 const Profile = () => {
-    const [user, setUser] = useState({ username: '', email: '' });
+    const { user: contextUser, setUser } = useContext(UserContext); // ใช้ Context
+    const [user, setUserProfile] = useState({ username: '', email: '' });
     const [showUpdate, setShowUpdate] = useState(false);
+    const [showEmailModal, setShowEmailModal] = useState(true); 
     const [error, setError] = useState('');
     const [updatedUser, setUpdatedUser] = useState({ username: '', email: '' });
-    const [inputEmail, setInputEmail] = useState(''); // State สำหรับ input email
-    const [isConfirmed, setIsConfirmed] = useState(false); // State สำหรับตรวจสอบการยืนยัน
+    const [inputEmail, setInputEmail] = useState('');
+    const [isConfirmed, setIsConfirmed] = useState(false);
 
-    // ฟังก์ชันสำหรับค้นหาผู้ใช้จาก email
     const fetchUser = async () => {
         try {
             const response = await axios.get('http://localhost:5000/users', {
@@ -19,24 +21,24 @@ const Profile = () => {
                 }
             });
 
-            // ค้นหาผู้ใช้ตาม email
             const loggedInUser = response.data.find(user => user.email === inputEmail);
             if (loggedInUser) {
-                setUser(loggedInUser);
+                setUserProfile(loggedInUser);
                 setUpdatedUser({ username: loggedInUser.username, email: loggedInUser.email });
-                setIsConfirmed(true); // ตั้งค่าสถานะยืนยันเป็น true
-                setError(''); // ลบข้อความผิดพลาดเมื่อพบผู้ใช้
+                setIsConfirmed(true);
+                setShowEmailModal(false);
+                setError('');
             } else {
-                setError('User not found'); // แสดงข้อความถ้าผู้ใช้ไม่พบ
+                setError('User not found');
             }
         } catch (error) {
             console.error('Error fetching user profile', error);
-            setError('Error fetching user profile'); // แสดงข้อความถ้ามีข้อผิดพลาดในการดึงข้อมูล
+            setError('Error fetching user profile');
         }
     };
 
     const handleConfirmClick = () => {
-        fetchUser(); // เรียกใช้ฟังก์ชันค้นหาผู้ใช้เมื่อกดปุ่มยืนยัน
+        fetchUser();
     };
 
     const handleUpdateClick = () => {
@@ -56,9 +58,11 @@ const Profile = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            setUser({ ...user, ...updatedUser });
+
+            setUserProfile({ ...user, ...updatedUser });
+            setUser({ ...contextUser, username: updatedUser.username }); // อัปเดต Context ด้วย username ใหม่
             setShowUpdate(false);
-            setError(''); // ลบข้อความผิดพลาด
+            setError('');
         } catch (error) {
             console.error('Error updating user details', error);
             setError('Failed to update details. Please try again.');
@@ -71,7 +75,7 @@ const Profile = () => {
     };
 
     const handleInputChange = (e) => {
-        setInputEmail(e.target.value); // อัพเดต inputEmail
+        setInputEmail(e.target.value);
     };
 
     return (
@@ -79,18 +83,22 @@ const Profile = () => {
             <h2>User Profile</h2>
             {error && <p className="error-message">{error}</p>}
 
-            {/* ฟอร์มสำหรับกรอก email */}
-            <div className="username-input">
-                <input
-                    type="email" // เปลี่ยนประเภท input เป็น email
-                    placeholder="Enter your email"
-                    value={inputEmail}
-                    onChange={handleInputChange}
-                />
-                <button onClick={handleConfirmClick}>Confirm</button> {/* ปุ่มยืนยัน */}
-            </div>
+            {showEmailModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Enter Your Email</h3>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={inputEmail}
+                            onChange={handleInputChange}
+                        />
+                        <button onClick={handleConfirmClick}>Confirm</button>
+                    </div>
+                </div>
+            )}
 
-            {isConfirmed && ( // แสดงข้อมูลโปรไฟล์เมื่อมีการยืนยัน
+            {isConfirmed && (
                 <div className="profile-details">
                     <p><strong>Username:</strong> {user.username}</p>
                     <p><strong>Email:</strong> {user.email}</p>
