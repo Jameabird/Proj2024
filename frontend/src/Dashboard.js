@@ -45,7 +45,7 @@ const Dashboard = () => {
                     </p> {/* แสดงวันที่และเวลาเรียลไทม์ */}
                     <p>Temperature: {latestSensorData.temperature} °C</p>
                     <p>Humidity: {latestSensorData.humidity} %</p>
-                    <p>Dust Density: {latestSensorData.dustDensity} mg/m³</p>
+                    <p>Dust Density: {latestSensorData.dustDensity} ug/m³</p>
                 </div>
             ) : (
                 <p>Loading latest sensor data...</p>
